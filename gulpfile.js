@@ -1,5 +1,6 @@
 var { watch, src, dest, parallel, series } = require('gulp');
 var browserSync = require('browser-sync');
+var twig = require('gulp-twig');
 
 // Девсервер
 function devServer(cb) {
@@ -16,7 +17,9 @@ function devServer(cb) {
 
 // Сборка
 function buildPages() {
-  return src('src/pages/*.html')
+  // Пути можно передавать массивами
+  return src(['src/pages/*.twig', 'src/pages/*.html'])
+    .pipe(twig())
     .pipe(dest('build/'));
 }
 
@@ -37,7 +40,7 @@ function buildAssets() {
 
 // Отслеживание
 function watchFiles() {
-  watch('src/pages/*.html', buildPages);
+  watch(['src/pages/*.twig', 'src/pages/*.html'], buildPages);
   watch('src/styles/*.css', buildStyles);
   watch('src/scripts/**/*.js', buildScripts);
   watch('src/assets/**/*.*', buildAssets);
