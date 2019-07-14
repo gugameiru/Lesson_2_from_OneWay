@@ -1,5 +1,20 @@
-var { src, dest, parallel } = require('gulp');
+var { watch, src, dest, parallel, series } = require('gulp');
+var browserSync = require('browser-sync');
 
+// Девсервер
+function devServer(cb) {
+  var params = {
+    watch: true,
+    reloadDebounce: 150,
+    notify: false,
+    server: { baseDir: './build' },
+  };
+
+  browserSync.create().init(params);
+  cb();
+}
+
+// Сборка
 function buildPages() {
   return src('src/pages/*.html')
     .pipe(dest('build/'));
@@ -20,7 +35,20 @@ function buildAssets() {
     .pipe(dest('build/assets/'));
 }
 
-// Указываем функции, которые будут доступны из терминала
-// Команда «по умолчанию» -- default -- будет срабатывать при вызове gulp без аргументов
-exports.default = parallel(buildPages, buildStyles, buildScripts, buildAssets);
+// Отслеживание
+function watchFiles() {
+  watch('src/pages/*.html', buildPages);
+  watch('src/styles/*.css', buildStyles);
+  watch('src/scripts/**/*.js', buildScripts);
+  watch('src/assets/**/*.*', buildAssets);
+}
+
+exports.default =
+  parallel(
+    devServer,
+    series(
+      parallel(buildPages, buildStyles, buildScripts, buildAssets),
+      watchFiles
+    )
+  );
 
