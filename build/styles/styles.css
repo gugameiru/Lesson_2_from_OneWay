@@ -1,5 +1,1 @@
-body {
-
-background: gainsboro;
-color: green;
-}
+body{background:#dcdcdc;color:green}@font-face{font-family:Icons;src:url(../fonts/fontello.woff2?2958244) format("woff2"),url(../fonts/fontello.woff?2958244) format("woff");font-weight:400;font-style:normal}[class*=" icon-"]:before,[class^=icon-]:before{font-family:Icons;font-style:normal;font-weight:400;display:inline-block}.icon-music:before{content:"\e800"}.icon-video:before{content:"\e801"}.icon-heart:before{content:"\e802"}.icon-ok-circled:before{content:"\e803"}.icon-info-circled:before{content:"\e804"}.icon-mail-alt:before{content:"\f0e0"}.icon-graduation-cap:before{content:"\f19d"}.icon-paw:before{content:"\f1b0"}figure{margin-right:10px;margin-left:0;display:inline-block}.example{display:grid;transition:all .5s;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background:linear-gradient(180deg,#fff,#000)}

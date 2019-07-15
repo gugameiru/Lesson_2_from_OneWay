@@ -1,6 +1,12 @@
 var { watch, src, dest, parallel, series } = require('gulp');
 var browserSync = require('browser-sync');
 var twig = require('gulp-twig');
+var imagemin = require('gulp-imagemin');
+var sass = require('gulp-sass');
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
+var cssnano = require('cssnano');
+
 
 // Девсервер
 function devServer(cb) {
@@ -24,8 +30,19 @@ function buildPages() {
 }
 
 function buildStyles() {
-  return src('src/styles/*.css')
+  return src('src/styles/*.scss')
+    .pipe(sass())
+    .pipe(postcss([
+      autoprefixer(),
+      cssnano()
+    ]))
     .pipe(dest('build/styles/'));
+}
+
+
+function buildFonts() {
+  return src('src/fonts/*.*')
+    .pipe(dest('build/fonts/'));
 }
 
 function buildScripts() {
@@ -33,24 +50,35 @@ function buildScripts() {
     .pipe(dest('build/scripts/'));
 }
 
-function buildAssets() {
-  return src('src/assets/**/*.*')
+function buildAssets(cb) {
+  // Уберём пока картинки из общего потока
+  src(['src/assets/**/*.*', '!src/assets/img/**/*.*'])
     .pipe(dest('build/assets/'));
+
+  src('src/assets/img/**/*.*')
+    .pipe(imagemin())
+    .pipe(dest('build/assets/img'));
+
+  // Раньше функция что-то вовзращала, теперь добавляем вместо этого искусственый колбэк
+  // Это нужно, чтобы Галп понимал, когда функция отработала и мог запустить следующие задачи
+  cb();
 }
 
 // Отслеживание
 function watchFiles() {
   watch(['src/pages/*.twig', 'src/pages/*.html'], buildPages);
   watch('src/styles/*.css', buildStyles);
+  watch('src/styles/*.scss', buildStyles);
   watch('src/scripts/**/*.js', buildScripts);
   watch('src/assets/**/*.*', buildAssets);
+  watch('src/fonts/*.*', buildFonts);
 }
 
 exports.default =
   parallel(
     devServer,
     series(
-      parallel(buildPages, buildStyles, buildScripts, buildAssets),
+      parallel(buildPages, buildStyles, buildScripts, buildAssets, buildFonts),
       watchFiles
     )
   );

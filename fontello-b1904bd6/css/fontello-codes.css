@@ -1,0 +1,9 @@
+
+.icon-music:before { content: '\e800'; } /* '' */
+.icon-video:before { content: '\e801'; } /* '' */
+.icon-heart:before { content: '\e802'; } /* '' */
+.icon-ok-circled:before { content: '\e803'; } /* '' */
+.icon-info-circled:before { content: '\e804'; } /* '' */
+.icon-mail-alt:before { content: '\f0e0'; } /* '' */
+.icon-graduation-cap:before { content: '\f19d'; } /* '' */
+.icon-paw:before { content: '\f1b0'; } /* '' */
