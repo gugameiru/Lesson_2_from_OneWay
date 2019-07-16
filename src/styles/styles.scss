@@ -1,6 +1,7 @@
+
 body {
-background: gainsboro;
-color: green;
+  background: gainsboro;
+  
 }
 
 @font-face {
@@ -30,15 +31,71 @@ color: green;
 
 figure {
     margin-right: 10px;
-    margin-left: 0;
+    margin-left: -20px;
+    
     display: inline-block;
 }
-
-.example {
-    display: grid;
-    transition: all .5s;
-    user-select: none;
-    background: linear-gradient(to bottom, white, black);
+ 
+.container { 
+  display: grid;    
+  grid-template-columns: repeat(3, 4fr);
+  //grid-template-columns: repeat(3, 4fr);
+  grid-gap: 10px 10px;
   }
-  
 
+
+.col1,.col2,.col3 {
+  margin: 5px;
+  padding: 10px;
+  border: 2px solid rgb(85, 85, 85); 
+  border-radius: 10px;
+}
+
+.myphoto {
+  width: 100%;  
+  border-radius: 10px;
+  
+}
+
+h1 {
+  margin-top: 0px;
+  font-size: 2vw;
+  text-align: center;
+}
+
+p {
+  font-size: 1.5vw;
+  text-align: justify;
+  margin: 10px;
+}
+
+a {
+  display: block;
+  font-size: 1.5vw;
+  text-align: center;
+}
+
+
+
+
+@media screen and (max-width: 990px) {
+  .container {
+    display: grid;    
+    grid-template-rows: repeat(3, 12fr);
+    grid-gap: 10px 10px;
+    }
+
+    .col1,.col2,.col3 {
+      margin: 5px;
+      padding: 10px;
+      border: 2px solid rgb(85, 85, 85); 
+      border-radius: 10px;
+    }
+    
+    .myphoto {
+      width: 100%;  
+      border-radius: 10px;
+      
+    }
+    
+}
